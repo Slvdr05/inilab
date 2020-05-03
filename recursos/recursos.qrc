@@ -1,0 +1,17 @@
+<RCC>
+  <qresource prefix="barraTitulo">
+    <file>BarraTitulo.png</file>
+  </qresource>
+  <qresource prefix="barraTitulo2">
+    <file>BarraTitulo2.png</file>
+  </qresource>
+  <qresource prefix="logoConfig">
+    <file>logoConfig.png</file>
+  </qresource>
+  <qresource prefix="logoConfig2">
+    <file>logoConfig2.jpg</file>
+  </qresource>
+  <qresource prefix="logoConfig3">
+    <file>logoConfig3.png</file>
+  </qresource>
+</RCC>
