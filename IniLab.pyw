@@ -109,6 +109,9 @@ class VentanaManager(QMainWindow):
 		#Ventana sin bordes
 		self.setWindowFlags(Qt.FramelessWindowHint)
 		
+        #Hacemos la aplicacion modo pantalla completa
+        self.showFullScreen()
+        
 		#Ocultamos el frame de control manual de la camara
 		self.Manual.hide()
 		
