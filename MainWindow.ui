@@ -11455,6 +11455,25 @@
       <pixmap resource="recursos/recursos.qrc">:/barraTitulo2/BarraTitulo2.png</pixmap>
      </property>
     </widget>
+    <widget class="QPushButton" name="btn_cerrar_3">
+     <property name="geometry">
+      <rect>
+       <x>345</x>
+       <y>5</y>
+       <width>34</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>41</width>
+       <height>37</height>
+      </size>
+     </property>
+    </widget>
     <zorder>barra_titulo_2</zorder>
     <zorder>label_21</zorder>
     <zorder>label_22</zorder>
@@ -11477,6 +11496,7 @@
     <zorder>reloj_inf</zorder>
     <zorder>frecuencia_inf</zorder>
     <zorder>frecuencia_sup</zorder>
+    <zorder>btn_cerrar_3</zorder>
    </widget>
    <widget class="QFrame" name="Configuracion">
     <property name="enabled">
@@ -11847,12 +11867,32 @@
       <pixmap resource="recursos/recursos.qrc">:/barraTitulo2/BarraTitulo2.png</pixmap>
      </property>
     </widget>
+    <widget class="QPushButton" name="btn_cerrar_2">
+     <property name="geometry">
+      <rect>
+       <x>345</x>
+       <y>5</y>
+       <width>34</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>41</width>
+       <height>37</height>
+      </size>
+     </property>
+    </widget>
     <zorder>barra_titulo_3</zorder>
     <zorder>groupBox</zorder>
     <zorder>label_23</zorder>
     <zorder>groupBox_2</zorder>
     <zorder>checkBox</zorder>
     <zorder>aceptar_config</zorder>
+    <zorder>btn_cerrar_2</zorder>
    </widget>
    <widget class="QPushButton" name="btn_config">
     <property name="geometry">
@@ -12177,7 +12217,7 @@
   <include location="recursos/recursos.qrc"/>
   <include location="recursos/recursos.qrc"/>
   <include location="recursos/recursos.qrc"/>
-  <include location="../../.designer/backup/recursos/recursos.qrc"/>
+  <include location="recursos/recursos.qrc"/>
  </resources>
  <connections/>
 </ui>
