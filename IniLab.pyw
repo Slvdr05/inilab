@@ -109,8 +109,8 @@ class VentanaManager(QMainWindow):
 		#Ventana sin bordes
 		self.setWindowFlags(Qt.FramelessWindowHint)
 		
-        #Hacemos la aplicacion modo pantalla completa
-        self.showFullScreen()
+		#Hacemos la aplicacion modo pantalla completa
+		self.showFullScreen()
         
 		#Ocultamos el frame de control manual de la camara
 		self.Manual.hide()
@@ -121,8 +121,8 @@ class VentanaManager(QMainWindow):
 		#Cargamos iconos
 		self.btn_config.setIcon(QIcon('recursos/logoConfig.png'))
 		self.btn_cerrar.setIcon(QIcon('recursos/BotonCerrar.png'))
-        self.btn_cerrar_2.setIcon(QIcon('recursos/BotonCerrar.png'))
-        self.btn_cerrar_3.setIcon(QIcon('recursos/BotonCerrar.png'))
+		self.btn_cerrar_2.setIcon(QIcon('recursos/BotonCerrar.png'))
+		self.btn_cerrar_3.setIcon(QIcon('recursos/BotonCerrar.png'))
 		self.barra_titulo_1.setPixmap(QPixmap('recursos/BarraTitulo.png'))
 		self.barra_titulo_2.setPixmap(QPixmap('recursos/BarraTitulo2.png'))
 		self.barra_titulo_3.setPixmap(QPixmap('recursos/BarraTitulo2.png'))
