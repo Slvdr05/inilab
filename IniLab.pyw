@@ -21,6 +21,7 @@ import os
 import csv
 from colormath.color_objects import XYZColor, sRGBColor,LabColor
 from colormath.color_conversions import convert_color
+import RPi.GPIO as GPIO
 
 #Funciones Auxiliares.
 def valida_respuesta(answer, source):
@@ -139,11 +140,15 @@ class VentanaManager(QMainWindow):
 		self.guardar_datos.clicked.connect(self.guarda_medicion)
 		self.guardar_img.clicked.connect(self.guarda_imagen)
 		self.btn_cerrar.clicked.connect(self.funcion_cerrar)
+        self.btn_cerrar_config.clicked.connect(self.configuracion_cerrar)
+        self.btn_cerrar_calibracion.clicked.connect(self.calibracion_cerrar)
 		
 		#Unimos Sliders con sus funciones
 		self.slider_reloj.valueChanged.connect(self.cambiar_pixelclock)
 		self.slider_exposicion.valueChanged.connect(self.cambiar_exposicion)
 		self.slider_frecuencia.valueChanged.connect(self.cambiar_frecuencia)
+        self.slider_frontal.valueChanged.connect(self.cambiar_frontal)
+        self.slider_contra.valueChanged.connect(self.cambiar_contra)
 		
 		#Unimos los RadioButtons con sus funciones
 		self.muestra_traslucida.toggled.connect(lambda:self.calibracion_auto(self.muestra_traslucida))
@@ -717,7 +722,15 @@ class VentanaManager(QMainWindow):
 		exposure_time_actual = ueye.DOUBLE()
 		answer = ueye.is_Exposure(self.Cam, ueye.IS_EXPOSURE_CMD_GET_EXPOSURE, exposure_time_actual, sizeof(ueye.DOUBLE()))
 		self.exposicion_valor.setText('{0:.2f}'.format(float(exposure_time_actual)) + ' ms')
-		
+	
+    def cambiar_frontal(self):
+        value = self.slider_frontal.value()
+        pwm_frontal.ChangeDutyCycle(value)
+       
+    def cambiar_contra(self):
+        value = self.slider_contra.value()
+        pwm_contra.ChangeDutyCycle(value)
+    
 	def configuracion(self):
 		#Mostramos el frame de control manual de la camara
 		self.Configuracion.show()
@@ -725,6 +738,10 @@ class VentanaManager(QMainWindow):
 	def configuracion_aceptar(self):
 		guardar_configuracion()
 		self.Configuracion.hide()
+        
+    def configuracion_cerrar(self):
+        self.Configuracion.hide()
+        leer_config_guardada()
 	
 	def calibracion_aceptar(self):
 		#Ocultamos el frame de control manual de la camara
@@ -752,7 +769,18 @@ class VentanaManager(QMainWindow):
 		
 		#Marcamos Seleccionada la calibracion manual
 		self.selec_manual.setChecked(True)
-	
+        
+	def calibracion_cerrar(self):
+        #Ocultamos el frame de control manual de la camara
+		self.Manual.hide()
+        pixel = int(dic_configuracion['manual'][0])
+		frames = float(dic_configuracion['manual'][1])
+		exposure = float(dic_configuracion['manual'][2])	
+
+		self.slider_reloj.setValue(pixel)
+		self.slider_frecuencia.setValue(int(frames*100))
+		self.slider_exposicion.setValue(int(exposure*100))
+    
 	def guarda_medicion(self):
 		guardar_medicion(self.medicion_R, self.medicion_G, self.medicion_B, self.calculo_L, self.calculo_a, self.calculo_b)
 	
@@ -761,6 +789,11 @@ class VentanaManager(QMainWindow):
 	
 	def funcion_cerrar(self):
 		self.capturando_imagen = False
+        #Paramos los PWMs y limpiamos las IO
+        pwm_frontal.stop()
+        pwm_contra.stop()
+        GPIO.cleanup()
+        #Cerramos la aplicacion
 		self.close()
 #-----------------------------------------------------------------------
 				
@@ -769,6 +802,22 @@ pathConfig = 'Inilab.config'
 variables = []
 dic_configuracion = {}
 leer_config_guardada()
+
+#Ajustamos la Raspberry para usar los pines de la tarjeta
+GPIO.setmode(GPIO.BOARD)
+#Poner los pines 12 y 14 como salida
+GPIO.setup(12, GPIO.OUT)
+GPIO.setup(14, GPIO.OUT)
+#Cargar configuracion guardada
+frontal_value = int(dic_configuracion['frontal'][0])
+contra_value = int(dic_configuracion['contra'][0])
+#Inicializamos los PWMs a 100 Hz
+pwm_frontal = GPIO.PWM(12, 100)
+pwm_contra = GPIO.PWM(14, 100)
+#Iniciamos los PWMs
+pwm_frontal.start(frontal_value)
+pwm_contra.start(contra_value)
+
 
 #Funcion principal
 #Instancionamos nuestra app a el sistema
